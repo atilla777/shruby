@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
 require "shruby"
+
+Shruby::Cli.start(ARGV)
