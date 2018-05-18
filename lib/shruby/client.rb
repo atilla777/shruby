@@ -4,21 +4,35 @@ require 'shodanz'
 require 'yaml'
 
 module Shruby
-  # Get info about hosts from Shodan service
-  # Example:
-  # shruby hosts -i hosts.txt -o results.txt -k API_KEY
-  # where hosts is file with list of IPs:
-  # 10.1.1
-  # 192.168.1.2
-  # etc.
+  # ==Represent client for connect to Shodan service
   class Client
-    def initialize(input_file = nil, output_file = nil, key = nil, verbose = false)
-      @hosts_file =  input_file || file_path('hosts.txt')
-      @results_file = output_file || file_path('shruby_results.txt')
+    # ==Create new connection to Shodan service
+    # ===Argumnets:
+    #   *input - file with hosts IP
+    #   *output - file for result
+    #   *key - Shodan API KEY
+    #
+    # ===Examples:
+    #   >>Shruby::Client.new(
+    #     input: './hosts.txt',
+    #     output: './results.txt',
+    #     key: 'Shodan API KEY',
+    #     verbose: true
+    #     )
+    #
+    def initialize(options)
+      @hosts_file =  options.fetch(
+        :input,
+        file_path('hosts.txt')
+      )
+      @results_file = options.fetch(
+        :output,
+        file_path('shruby_results.txt')
+      )
       @hosts = hosts
-      @key = key
-      @client = client
-      @verbose = verbose
+      @key = options[:key]
+      @connection = connection
+      @verbose = options.fetch(:verbose, false)
     end
 
     def run
@@ -32,7 +46,7 @@ module Shruby
     def send_request
       @hosts.each_with_object([]) do |host, memo|
         begin
-          memo << @client.rest_api.host(host)
+          memo << @connection.rest_api.host(host)
         rescue StandardError => err
           memo << {error: err}
         end
@@ -49,7 +63,7 @@ module Shruby
       File.join(File.dirname(Dir.pwd), file_name)
     end
 
-    def client
+    def connection
       Shodanz.client.new(key: @key)
     end
 
