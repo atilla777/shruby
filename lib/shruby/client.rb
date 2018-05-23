@@ -4,24 +4,11 @@ require 'shodanz'
 require 'yaml'
 
 module Shruby
-  # ==Represent client for connect to Shodan service
+  # ===Represent client for connect to Shodan service
   class Client
-    # ==Create new connection to Shodan service
-    # ===Argumnets:
-    #   *input - file with hosts IP
-    #   *output - file for result
-    #   *key - Shodan API KEY
-    #
-    # ===Examples:
-    #   >>Shruby::Client.new(
-    #     input: './hosts.txt',
-    #     output: './results.txt',
-    #     key: 'Shodan API KEY',
-    #     verbose: true
-    #     )
-    #
     def initialize(options)
       @hosts = options[:hosts]
+      check_hosts_params(@hosts)
       @key = options[:key]
       @connection = connection
     end
@@ -40,6 +27,11 @@ module Shruby
 
     def connection
       Shodanz.client.new(key: @key)
+    end
+
+    def check_hosts_params(hosts)
+      return if hosts.any?
+      raise ArgumentError.new("Host or hosts must be specified")
     end
   end
 end

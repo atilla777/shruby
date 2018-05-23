@@ -4,14 +4,15 @@ require 'thor'
 
 module Shruby
   class Cli < Thor
-    method_option :input, default: 'hosts.txt', desc: 'input file with hosts IP', aliases: '-i'
-    method_option :output, default: 'results.txt', desc: 'output file', aliases: '-o'
+    method_option :input, desc: 'input file with hosts IP', aliases: '-i'
+    method_option :output, desc: 'output file', aliases: '-o'
     method_option :key, desc: 'Shodan API key', aliases: '-k', required: true, type: :string
     method_option :print, desc: 'print result on screen', aliases: '-p', type: :boolean
-    method_option :verbose, desc: 'verbose output', aliases: '-v', type: :boolean
+    # TODO: use or delete
+    #method_option :verbose, desc: 'verbose output', aliases: '-v', type: :boolean
     desc(
       'h HOST',
-      'Get host info by thier IP'
+      'Get host/hosts info by IP'
     )
     def h(host = nil)
       params = set_params(host, options)
@@ -25,8 +26,8 @@ module Shruby
     no_commands do
       def set_params(host, params)
         result = params
+        check_hosts_params(host, params)
         hosts = host ? [host] : read_hosts(params[:input])
-        raise ArgumentError unless hosts
         result.merge(hosts: hosts)
       end
 
@@ -38,17 +39,32 @@ module Shruby
 
       def save_result(params, result)
         return unless params[:output]
-        File.open(params[:output],'w') do |file|
-          file.write(result.to_yaml)
+        check_file_error do
+          File.open(params[:output],'w') do |file|
+            file.write(result.to_yaml)
+          end
         end
       end
 
       def file_path(file_name)
-        File.join(File.dirname(Dir.pwd), file_name)
+        File.join(Dir.pwd, file_name)
       end
 
       def read_hosts input
-        File.open(input, 'r').readlines
+        check_file_error { File.open(input, 'r').readlines }
+      end
+
+      def check_hosts_params(hosts, params)
+        return if hosts || params[:input]
+        raise ArgumentError.new("Host or hosts file must be specified")
+      end
+
+      def check_file_error
+        begin
+          yield
+        rescue StandardError => e
+          puts "Error open file: #{e}"
+        end
       end
     end
   end
