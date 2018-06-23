@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'thor'
+require 'pp'
 
 module Shruby
   class Cli < Thor
@@ -9,7 +10,7 @@ module Shruby
     method_option :key, desc: 'Shodan API key', aliases: '-k', required: true, type: :string
     method_option :print, desc: 'print result on screen', aliases: '-p', type: :boolean
     # TODO: use or delete
-    #method_option :verbose, desc: 'verbose output', aliases: '-v', type: :boolean
+    # method_option :verbose, desc: 'verbose output', aliases: '-v', type: :boolean
     desc(
       'h HOST',
       'Get host/hosts info by IP'
