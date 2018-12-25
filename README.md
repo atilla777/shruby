@@ -1,5 +1,5 @@
 # Shruby
-Gem and cli to use shodan API
+Shruby is is a Ruby gem and cli to use shodan API
 
 ## Installation
 
