@@ -13,17 +13,16 @@ gem 'shruby'
 ```
 
 And then execute:
-
-$ bundle
-
+```shell
+bundle
+```
 Or install it yourself as:
-
 ```shell
 gem install shruby
 ``` 
 OR without gem install
 ```shell
- git clone https://github.com/atilla777/shruby.git
+git clone https://github.com/atilla777/shruby.git
 cd sh ruby
 bundle install
 ```
@@ -45,12 +44,12 @@ bundle exec shruby h 212.73.99.6 -h > ~/ФАЙЛ.txt -k КЛЮЧ
 ```
 где – это ФАЙЛ – файл с результатом
 
-Скопировать с помощью SCP файл с результатом на хост с Windows и искать в нем (с помощью notepad++) информацию об открытых портах по следующей строке
+Информацию об открытых портах можно искать, открыв файл с результатом в текстовом редакторе, по следующей строке
 **"port"=>**
 или конкретный номер порта (в данном случае 22)
 **"port"=>22**
  
- Дата на которую существовал открытый порт указано в поле (ниже поля)
+Дата на которую существовал открытый порт указано в поле (ниже поля)
 
 ## Development
 
