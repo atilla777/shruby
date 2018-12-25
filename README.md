@@ -1,8 +1,5 @@
 # Shruby
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/shruby`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Gem and cli to use shodan API
 
 ## Installation
 
@@ -31,6 +28,7 @@ bundle install
 ```shell
 bundle exec shruby h 212.73.99.6 -k API_КЛЮЧ
 ```
+где API_КЛЮЧ - это ключ с shodan.io
 Опции shruby можно посмтореть выполнив
 ```shell
 bundle exec shruby help h
@@ -40,16 +38,16 @@ bundle exec shruby help h
 Выполнить команды
 ```shell
 cd ~/shruby 
-bundle exec shruby h 212.73.99.6 -h > ~/ФАЙЛ.txt -k КЛЮЧ
+bundle exec shruby h 212.73.99.6 -h > ~/ФАЙЛ -k КЛЮЧ
 ```
-где – это ФАЙЛ – файл с результатом
+где ФАЙЛ – это файл с результатом
 
 Информацию об открытых портах можно искать, открыв файл с результатом в текстовом редакторе, по следующей строке
 **"port"=>**
 или конкретный номер порта (в данном случае 22)
 **"port"=>22**
  
-Дата на которую существовал открытый порт указано в поле (ниже поля)
+Дата на которую существовал открытый порт указано в поле "timestamp" (ниже поля "port")
 
 ## Development
 
