@@ -11,12 +11,14 @@ module Shruby
       check_hosts_params(@hosts)
       @key = options[:key]
       @connection = connection
+      @history =  options[:history]
+      @minify =  options[:minify]
     end
 
     def request
       @hosts.each_with_object([]) do |host, memo|
         begin
-          memo << @connection.rest_api.host(host)
+          memo << @connection.rest_api.host(host, history: @history, minify: @minify)
         rescue StandardError => err
           memo << {error: err}
         end

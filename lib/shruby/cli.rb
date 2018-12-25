@@ -9,6 +9,8 @@ module Shruby
     method_option :output, desc: 'output file', aliases: '-o'
     method_option :key, desc: 'Shodan API key', aliases: '-k', required: true, type: :string
     method_option :print, desc: 'print result on screen', aliases: '-p', type: :boolean
+    method_option :history, desc: 'get full history of an IP address', aliases: '-h', type: :boolean
+    method_option :minify, desc: 'not show banners', aliases: '-m', type: :boolean
     # TODO: use or delete
     # method_option :verbose, desc: 'verbose output', aliases: '-v', type: :boolean
     desc(
