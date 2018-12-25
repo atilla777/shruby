@@ -14,15 +14,43 @@ gem 'shruby'
 
 And then execute:
 
-    $ bundle
+$ bundle
 
 Or install it yourself as:
 
-    $ gem install shruby
+```shell
+gem install shruby
+``` 
+OR without gem install
+```shell
+ git clone https://github.com/atilla777/shruby.git
+cd sh ruby
+bundle install
+```
+## Usage (when gem not installed)
+Поиск данных по хосту (информация об открытых портах и баннерах)
+```shell
+bundle exec shruby h 212.73.99.6 -k API_КЛЮЧ
+```
+Опции shruby можно посмтореть выполнив
+```shell
+bundle exec shruby help h
+```
+### Примеры использования
+#### Поиск исторических данных по хосту (какие порты были открыты ранее)
+Выполнить команды
+```shell
+cd ~/shruby 
+bundle exec shruby h 212.73.99.6 -h > ~/ФАЙЛ.txt -k КЛЮЧ
+```
+где – это ФАЙЛ – файл с результатом
 
-## Usage
-
-TODO: Write usage instructions here
+Скопировать с помощью SCP файл с результатом на хост с Windows и искать в нем (с помощью notepad++) информацию об открытых портах по следующей строке
+**"port"=>**
+или конкретный номер порта (в данном случае 22)
+**"port"=>22**
+ 
+ Дата на которую существовал открытый порт указано в поле (ниже поля)
 
 ## Development
 
